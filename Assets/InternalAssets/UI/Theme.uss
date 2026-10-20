@@ -1,0 +1,68 @@
+.screen {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    color: rgb(246, 238, 216);
+    font-size: 18px;
+}
+.menu-screen { background-color: rgb(15, 18, 29); flex-direction: row; }
+.menu-copy { width: 53%; padding: 7% 5% 5% 7%; justify-content: center; }
+.eyebrow { color: rgb(233, 171, 89); font-size: 14px; -unity-font-style: bold; letter-spacing: 3px; margin-bottom: 20px; }
+.title { font-size: 76px; -unity-font-style: bold; letter-spacing: -2px; white-space: normal; }
+.subtitle { color: rgb(172, 183, 184); font-size: 20px; margin-top: 14px; margin-bottom: 34px; white-space: normal; }
+.menu-buttons { max-width: 330px; }
+Button {
+    height: 52px; margin: 0 0 10px 0; padding: 0 20px;
+    background-color: rgb(31, 39, 49); color: rgb(246, 238, 216);
+    border-width: 1px; border-color: rgb(65, 77, 83); border-radius: 5px;
+    -unity-text-align: middle-left; -unity-font-style: bold; font-size: 18px;
+}
+Button:hover { background-color: rgb(48, 61, 66); border-color: rgb(170, 205, 176); }
+Button:focus { border-width: 2px; border-color: rgb(197, 231, 186); }
+Button:active { background-color: rgb(70, 81, 65); }
+Button:disabled { opacity: 0.45; }
+Button.primary { background-color: rgb(225, 165, 82); color: rgb(23, 28, 32); border-color: rgb(246, 194, 115); }
+Button.primary:hover { background-color: rgb(247, 192, 108); }
+Button.quiet { background-color: rgba(0, 0, 0, 0); border-color: rgb(55, 64, 72); }
+.small { color: rgb(156, 173, 178); font-size: 13px; white-space: normal; }
+.menu-footer { position: absolute; bottom: 26px; left: 7%; right: 5%; flex-direction: row; justify-content: space-between; }
+.art { width: 47%; overflow: hidden; background-color: rgb(21, 30, 38); }
+.moon { position: absolute; width: 180px; height: 180px; border-radius: 100px; background-color: rgb(231, 223, 182); top: 12%; right: 16%; }
+.moon-crater { width: 42px; height: 42px; background-color: rgb(212, 208, 169); border-radius: 30px; margin-left: 35px; margin-top: 45px; }
+.ghost { position: absolute; width: 150px; height: 182px; top: 42%; left: 24%; border-top-left-radius: 80px; border-top-right-radius: 80px; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; background-color: rgb(210, 235, 220); rotate: -8deg; }
+.eyes { flex-direction: row; justify-content: center; margin-top: 57px; }
+.eye { width: 16px; height: 28px; border-radius: 8px; background-color: rgb(24, 43, 46); margin: 0 13px; }
+.ghost-shadow { position: absolute; top: 76%; left: 22%; width: 180px; height: 25px; border-radius: 50%; background-color: rgba(0, 0, 0, 0.2); }
+.house { position: absolute; bottom: 0; width: 90px; height: 120px; background-color: rgb(10, 17, 23); border-top-left-radius: 8px; border-top-right-radius: 8px; }
+.house-a { left: 0; height: 180px; width: 110px; }
+.house-b { right: 10%; height: 135px; }
+.house-c { right: -8%; height: 205px; }
+.window { width: 20px; height: 30px; margin-left: 24px; margin-top: 38px; background-color: rgb(209, 138, 68); }
+.art-caption { position: absolute; bottom: 27%; right: 9%; color: rgb(160, 191, 181); font-size: 13px; letter-spacing: 2px; }
+.overlay { background-color: rgba(9, 13, 22, 0.91); align-items: center; justify-content: center; }
+.card { width: 440px; padding: 36px; background-color: rgb(23, 31, 40); border-width: 1px; border-color: rgb(65, 77, 83); border-radius: 8px; }
+.heading { font-size: 36px; -unity-font-style: bold; margin-bottom: 12px; }
+.card .subtitle { font-size: 16px; margin-top: 0; margin-bottom: 24px; }
+.settings-card { width: 760px; max-height: 94%; padding: 28px 36px; }
+.settings-header { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.section-title { color: rgb(233, 171, 89); -unity-font-style: bold; font-size: 13px; letter-spacing: 2px; margin-top: 18px; margin-bottom: 10px; }
+.setting-row { flex-direction: row; align-items: center; height: 44px; }
+.setting-name { width: 170px; font-size: 16px; }
+.setting-slider { flex-grow: 1; margin-right: 20px; }
+.setting-value { width: 68px; -unity-text-align: middle-right; font-size: 16px; color: rgb(197, 231, 186); }
+.controls-grid { flex-direction: row; flex-wrap: wrap; }
+.binding-row { width: 50%; flex-direction: row; align-items: center; padding-right: 16px; height: 42px; }
+.binding-label { flex-grow: 1; font-size: 14px; }
+.binding-button { width: 130px; height: 34px; font-size: 13px; margin-bottom: 0; -unity-text-align: middle-center; padding: 0 6px; }
+.settings-actions { flex-direction: row; margin-top: 20px; }
+.settings-actions Button { flex-grow: 1; margin-right: 10px; -unity-text-align: middle-center; }
+.status { min-height: 38px; font-size: 14px; color: rgb(197, 231, 186); white-space: normal; margin-top: 10px; }
+.hud { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.hud-top { flex-direction: row; justify-content: space-between; padding: 28px 34px; }
+.hud-chip { padding: 14px 22px; background-color: rgba(14, 21, 29, 0.8); border-radius: 6px; }
+.hud-caption { color: rgb(176, 195, 184); font-size: 12px; letter-spacing: 2px; }
+.hud-number { font-size: 30px; -unity-font-style: bold; }
+.hud-bottom { position: absolute; left: 34px; bottom: 24px; right: 34px; flex-direction: row; justify-content: space-between; }
+.crosshair { position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin-left: -3px; margin-top: -3px; background-color: rgb(219, 238, 214); border-radius: 3px; }
+.action-notice { position: absolute; top: 57%; width: 100%; -unity-text-align: middle-center; color: rgb(220, 235, 203); font-size: 16px; }
+.result-score { font-size: 64px; color: rgb(233, 171, 89); -unity-font-style: bold; margin-bottom: 18px; }
+.hidden { display: none; }

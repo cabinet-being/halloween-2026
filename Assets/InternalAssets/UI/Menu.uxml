@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Theme.uss" />
+    <ui:VisualElement name="menu-screen" class="screen menu-screen">
+        <ui:VisualElement class="menu-copy">
+            <ui:Label text="OCTOBER 31 · ONE NIGHT ONLY" class="eyebrow" />
+            <ui:Label text="A LITTLE&#10;NIGHT MISCHIEF" class="title" />
+            <ui:Label text="One little ghost. A whole town of trouble.&#10;Make the most of the night before dawn." class="subtitle" />
+            <ui:VisualElement class="menu-buttons">
+                <ui:Button name="play-button" text="Start the night  →" class="primary" />
+                <ui:Button name="settings-button" text="Settings" />
+                <ui:Button name="quit-button" text="Quit game" class="quiet" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="art" picking-mode="Ignore">
+            <ui:VisualElement class="moon"><ui:VisualElement class="moon-crater" /></ui:VisualElement>
+            <ui:VisualElement class="ghost-shadow" />
+            <ui:VisualElement class="ghost"><ui:VisualElement class="eyes"><ui:VisualElement class="eye" /><ui:VisualElement class="eye" /></ui:VisualElement></ui:VisualElement>
+            <ui:Label text="SWEET TOOTH. WILD SPIRIT." class="art-caption" />
+            <ui:VisualElement class="house house-a"><ui:VisualElement class="window" /></ui:VisualElement>
+            <ui:VisualElement class="house house-b"><ui:VisualElement class="window" /></ui:VisualElement>
+            <ui:VisualElement class="house house-c"><ui:VisualElement class="window" /></ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="menu-footer"><ui:Label text="HALLOWEEN 2026" class="small" /><ui:Label text="A small ghost. A fresh start." class="small" /></ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
