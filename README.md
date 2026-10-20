@@ -8,7 +8,9 @@ A Unity project for Halloween 2026. Currently at the initial setup stage, with a
 
 ## Overview
 
-The repository contains the starter Unity scene, render pipeline settings, input actions, and folders for future game assets and code. The game concept and core loop are still to be defined.
+Play as a little ghost during one Halloween night: possess objects, scare pedestrians, collect candy, and cause mischief to score as many points as possible before dawn.
+
+The repository currently contains the starter Unity scene and project scaffold. See the [short game design document and MVP scope](Docs/Gameplay.md) for the planned gameplay; these mechanics are not implemented yet.
 
 ## Features
 
