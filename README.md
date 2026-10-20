@@ -4,20 +4,22 @@
   <img src="https://img.shields.io/badge/unity-6000.4.7f1-blue" alt="Unity 6000.4.7f1">
 </p>
 
-A Unity project for Halloween 2026. Currently at the initial setup stage, with a project structure based on mousestaurant.
+A Unity project for Halloween 2026. Currently at the gameplay foundation stage, with a project structure based on mousestaurant.
 
 ## Overview
 
 Play as a little ghost during one Halloween night: possess objects, scare pedestrians, collect candy, and cause mischief to score as many points as possible before dawn.
 
-The repository currently contains the starter Unity scene and project scaffold. See the [short game design document and MVP scope](Docs/Gameplay.md) for the planned gameplay; these mechanics are not implemented yet.
+The repository contains a technical foundation for the night, scoring, persistent progress, and environment. See the [short game design document and MVP scope](Docs/Gameplay.md) for the planned gameplay and [architecture](Docs/Architecture.md) for the implemented APIs.
 
 ## Features
 
 - Universal Render Pipeline configuration.
 - Starter Input System actions.
 - Dedicated folders for project assets and documentation.
-- No custom gameplay implemented yet.
+- Timed night with pause, completion, and a configurable moon/sky cycle.
+- Score categories, saved records, and persistent secret discoveries.
+- Development controls for exercising the foundation; player/NPC gameplay is not implemented yet.
 
 ## Screenshots
 
@@ -31,7 +33,9 @@ TODO: Add screenshots once the first playable prototype is ready.
 
 ## Usage
 
-Open `Assets/InternalAssets/Scenes/SCN_Main.unity` and press Play to view the starter scene.
+Open `Assets/InternalAssets/Scenes/SCN_Main.unity` and press Play to exercise the foundation. The development panel can award points, advance time, discover the sample secret, pause, and restart. Tune `Assets/InternalAssets/Data/NightSettings.asset` in the Inspector.
+
+If setting up a fresh scene, use **Halloween → Set Up Foundation Scene** once.
 
 With Unity CLI installed, open the project from the repository root:
 
@@ -45,6 +49,7 @@ unity open .
 halloween-2026/
 ├── Assets/
 │   ├── InternalAssets/
+│   │   ├── Data/
 │   │   ├── Input/
 │   │   ├── Models/
 │   │   │   ├── Materials/
@@ -60,11 +65,12 @@ halloween-2026/
 │   │   ├── Scenes/
 │   │   │   └── SCN_Main.unity
 │   │   ├── Scripts/
-│   │   │   ├── App/Editor/
-│   │   │   ├── Gameplay/Actor/
+│   │   │   ├── App/ (Editor, Session, Progress)
+│   │   │   ├── Gameplay/ (Actor, Environment)
 │   │   │   ├── Shared/
 │   │   │   └── UI/
-│   │   └── Sprites/UI/
+│   │   ├── Sprites/UI/
+│   │   └── Tests/Editor/
 │   ├── Settings/
 │   └── TutorialInfo/
 ├── Docs/
@@ -117,10 +123,11 @@ kanban
       art["Define art and audio direction"]
       build["Choose target platform and build workflow"]
     todo[Todo]
-      concept["Define game concept and core loop"]
+      prototype["Implement ghost movement and first possession"]
     inProgress[In Progress]
     testing[Testing]
     done[Done]
+      concept["Define game concept and MVP scope"]
       structure["Create base project structure"]
       docs["Outline README and project documentation"]
       git["Initialize Git and Unity ignore rules"]

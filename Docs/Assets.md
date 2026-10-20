@@ -2,13 +2,19 @@
 
 ## Scenes
 
-- `Assets/InternalAssets/Scenes/SCN_Main.unity` — original Unity starter scene, renamed and moved with its GUID preserved.
+- `Assets/InternalAssets/Scenes/SCN_Main.unity` — starter scene with the game bootstrapper, moon/environment controller, and development panel.
 
 ## Technical Resources
 
 - `Assets/InternalAssets/Input/InputSystem_Actions.inputactions` — starter input actions.
 - `Assets/Settings/` — URP renderers, pipeline assets, and volume profiles.
 - `Assets/TutorialInfo/` and `Assets/Readme.asset` — original Unity template resources.
+
+## Foundation Data
+
+- `Assets/InternalAssets/Data/NightSettings.asset` — night duration, clock hours, sky gradients, and moon arc.
+- `Assets/InternalAssets/Data/SEC_FirstSecret.asset` — sample gallery entry with ID `first-secret`.
+- `Assets/InternalAssets/Data/MAT_Moon.mat` — unlit material for the placeholder moon.
 
 ## Planned Asset Locations
 
