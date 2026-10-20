@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Theme.uss" />
+    <ui:VisualElement name="game-screen" class="screen" picking-mode="Ignore">
+        <ui:VisualElement name="hud" class="hud" picking-mode="Ignore">
+            <ui:VisualElement class="hud-top" picking-mode="Ignore">
+                <ui:VisualElement class="hud-chip"><ui:Label text="TONIGHT'S MISCHIEF" class="hud-caption" /><ui:Label name="score-label" text="0" class="hud-number" /></ui:VisualElement>
+                <ui:VisualElement class="hud-chip"><ui:Label text="UNTIL DAWN" class="hud-caption" /><ui:Label name="time-label" text="08:00" class="hud-number" /></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="crosshair" />
+            <ui:Label name="action-notice" class="action-notice" />
+            <ui:VisualElement class="hud-bottom"><ui:Label name="controls-hint" text="WASD · Move    Mouse · Look" class="small" /><ui:Label text="ESC · Pause" class="small" /></ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="pause-screen" class="screen overlay hidden">
+            <ui:VisualElement class="card">
+                <ui:Label text="TAKE A BREATHER" class="eyebrow" />
+                <ui:Label text="Night on hold" class="heading" />
+                <ui:Label text="The moon can wait. Your mischief will be here." class="subtitle" />
+                <ui:Button name="resume-button" text="Resume" class="primary" />
+                <ui:Button name="settings-button" text="Settings" />
+                <ui:Button name="menu-button" text="Main Menu" class="quiet" />
+                <ui:Label text="Returning to the menu ends this unfinished night." class="small" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="results-screen" class="screen overlay hidden">
+            <ui:VisualElement class="card">
+                <ui:Label text="HERE COMES THE SUN" class="eyebrow" />
+                <ui:Label text="A night to remember" class="heading" />
+                <ui:Label text="Your score" class="small" />
+                <ui:Label name="result-score" text="0" class="result-score" />
+                <ui:Label name="best-score" text="Best night: 0" class="subtitle" />
+                <ui:Button name="retry-button" text="One more night" class="primary" />
+                <ui:Button name="results-menu-button" text="Main Menu" class="quiet" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
