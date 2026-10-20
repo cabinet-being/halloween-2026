@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Theme.uss" />
+    <ui:VisualElement name="settings-screen" class="screen overlay hidden">
+        <ui:VisualElement class="card settings-card">
+            <ui:VisualElement class="settings-header"><ui:Label text="MAKE YOURSELF AT HOME" class="eyebrow" /><ui:Label text="ESC · Back" class="small" /></ui:VisualElement>
+            <ui:Label text="Settings" class="heading" />
+            <ui:ScrollView name="settings-scroll">
+                <ui:Label text="SOUND" class="section-title" />
+                <ui:VisualElement class="setting-row"><ui:Label text="Master volume" class="setting-name" /><ui:Slider name="master-slider" low-value="0" high-value="100" class="setting-slider" /><ui:Label name="master-value" class="setting-value" /></ui:VisualElement>
+                <ui:VisualElement class="setting-row"><ui:Label text="Music volume" class="setting-name" /><ui:Slider name="music-slider" low-value="0" high-value="100" class="setting-slider" /><ui:Label name="music-value" class="setting-value" /></ui:VisualElement>
+                <ui:Label text="CAMERA" class="section-title" />
+                <ui:VisualElement class="setting-row"><ui:Label text="Mouse sensitivity" class="setting-name" /><ui:Slider name="sensitivity-slider" low-value="0.1" high-value="4" class="setting-slider" /><ui:Label name="sensitivity-value" class="setting-value" /></ui:VisualElement>
+                <ui:VisualElement class="setting-row"><ui:Label text="Field of view" class="setting-name" /><ui:Slider name="fov-slider" low-value="45" high-value="100" class="setting-slider" /><ui:Label name="fov-value" class="setting-value" /></ui:VisualElement>
+                <ui:Label text="CONTROLS" class="section-title" />
+                <ui:VisualElement class="controls-grid">
+                    <ui:VisualElement class="binding-row"><ui:Label text="Move forward" class="binding-label" /><ui:Button name="bind-forward" class="binding-button" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Move backward" class="binding-label" /><ui:Button name="bind-backward" class="binding-button" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Move left" class="binding-label" /><ui:Button name="bind-left" class="binding-button" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Move right" class="binding-label" /><ui:Button name="bind-right" class="binding-button" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Primary action" class="binding-label" /><ui:Button name="bind-primary" class="binding-button" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Secondary action" class="binding-label" /><ui:Button name="bind-secondary" class="binding-button" /></ui:VisualElement>
+                </ui:VisualElement>
+                <ui:Label text="Mouse movement controls the camera. Escape is always available for pause and back." class="small" />
+                <ui:Label name="settings-status" text="Changes apply immediately and are saved automatically." class="status" />
+            </ui:ScrollView>
+            <ui:VisualElement class="settings-actions"><ui:Button name="defaults-button" text="Restore defaults" class="quiet" /><ui:Button name="settings-back-button" text="Back" class="primary" /></ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
