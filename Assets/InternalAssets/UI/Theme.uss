@@ -7,8 +7,8 @@
 .menu-screen { background-color: rgb(15, 18, 29); flex-direction: row; }
 .menu-copy { width: 53%; padding: 7% 5% 5% 7%; justify-content: center; }
 .eyebrow { color: rgb(233, 171, 89); font-size: 14px; -unity-font-style: bold; letter-spacing: 3px; margin-bottom: 20px; }
-.title { font-size: 76px; -unity-font-style: bold; letter-spacing: -2px; white-space: normal; }
-.subtitle { color: rgb(172, 183, 184); font-size: 20px; margin-top: 14px; margin-bottom: 34px; white-space: normal; }
+.title { font-size: 60px; -unity-font-style: bold; letter-spacing: -2px; white-space: normal; }
+.subtitle { color: rgb(172, 183, 184); font-size: 18px; margin-top: 14px; margin-bottom: 26px; white-space: normal; }
 .menu-buttons { max-width: 330px; }
 Button {
     height: 52px; margin: 0 0 10px 0; padding: 0 20px;
@@ -66,3 +66,17 @@ Button.quiet { background-color: rgba(0, 0, 0, 0); border-color: rgb(55, 64, 72)
 .action-notice { position: absolute; top: 57%; width: 100%; -unity-text-align: middle-center; color: rgb(220, 235, 203); font-size: 16px; }
 .result-score { font-size: 64px; color: rgb(233, 171, 89); -unity-font-style: bold; margin-bottom: 18px; }
 .hidden { display: none; }
+
+.settings-card { padding: 20px 28px; }
+.settings-card .eyebrow { margin-bottom: 0; font-size: 12px; }
+.settings-card .heading { font-size: 30px; margin-bottom: 4px; }
+.settings-card .section-title { margin-top: 12px; margin-bottom: 6px; }
+.settings-card .setting-row { height: 36px; }
+.settings-card .binding-row { height: 36px; }
+.settings-card .status { min-height: 26px; margin-top: 6px; font-size: 12px; }
+.settings-card .settings-actions { margin-top: 12px; }
+.settings-card .settings-actions Button { height: 44px; margin-bottom: 0; }
+.unity-base-slider__tracker { background-color: rgb(65, 80, 85); border-color: rgb(65, 80, 85); }
+.unity-base-slider__dragger { background-color: rgb(197, 231, 186); border-color: rgb(197, 231, 186); border-radius: 3px; }
+.unity-scroller--vertical { width: 10px; }
+.unity-scroller__low-button, .unity-scroller__high-button { display: none; }
