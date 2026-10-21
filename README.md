@@ -19,7 +19,9 @@ The repository contains a technical foundation for the night, scoring, persisten
 - Dedicated folders for project assets and documentation.
 - Timed night with pause, completion, and a configurable moon/sky cycle.
 - Score categories, saved records, and persistent secret discoveries.
-- Development controls for exercising the foundation; player/NPC gameplay is not implemented yet.
+- UI Toolkit main menu, gameplay HUD, pause menu, shared settings, and results screen.
+- Persistent audio/camera settings and rebindable controls.
+- Basic third-person ghost movement on a blockout street; possession and NPC gameplay are not implemented yet.
 
 ## Screenshots
 
@@ -33,9 +35,9 @@ TODO: Add screenshots once the first playable prototype is ready.
 
 ## Usage
 
-Open `Assets/InternalAssets/Scenes/SCN_Main.unity` and press Play to exercise the foundation. The development panel can award points, advance time, discover the sample secret, pause, and restart. Tune `Assets/InternalAssets/Data/NightSettings.asset` in the Inspector.
+Open `Assets/InternalAssets/Scenes/SCN_Menu.unity` and press Play. Choose **Start the night** to enter gameplay; use **WASD** to move, the **mouse** to look, and **Escape** for pause. Settings are available from the main menu and pause menu, apply immediately, and persist between launches.
 
-If setting up a fresh scene, use **Halloween → Set Up Foundation Scene** once.
+See [screens, settings, and controls](Docs/UI.md) for the UI layouts, action bindings, and setup tools. The gameplay scene also works when opened directly. Tune the night in `Assets/InternalAssets/Data/NightSettings.asset`.
 
 With Unity CLI installed, open the project from the repository root:
 
@@ -49,6 +51,7 @@ unity open .
 halloween-2026/
 ├── Assets/
 │   ├── InternalAssets/
+│   │   ├── Audio/
 │   │   ├── Data/
 │   │   ├── Input/
 │   │   ├── Models/
@@ -63,6 +66,7 @@ halloween-2026/
 │   │   │   ├── Props/
 │   │   │   └── UI/
 │   │   ├── Scenes/
+│   │   │   ├── SCN_Menu.unity
 │   │   │   └── SCN_Main.unity
 │   │   ├── Scripts/
 │   │   │   ├── App/ (Editor, Session, Progress)
@@ -70,7 +74,8 @@ halloween-2026/
 │   │   │   ├── Shared/
 │   │   │   └── UI/
 │   │   ├── Sprites/UI/
-│   │   └── Tests/Editor/
+│   │   ├── Tests/Editor/
+│   │   └── UI/
 │   ├── Settings/
 │   └── TutorialInfo/
 ├── Docs/
@@ -78,7 +83,8 @@ halloween-2026/
 │   ├── Assets.md
 │   ├── CodeStyle.md
 │   ├── Gameplay.md
-│   └── NamingConvention.md
+│   ├── NamingConvention.md
+│   └── UI.md
 ├── Packages/
 ├── ProjectSettings/
 └── README.md

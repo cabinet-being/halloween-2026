@@ -2,7 +2,7 @@
 
 ## Scope
 
-The foundation provides a timed night, scoring, persistent records and secret discoveries, environmental presentation, and a development panel. Player control, possession, NPC behavior, candy collection, and the final HUD are not implemented.
+The foundation provides a timed night, scoring, persistent records and secret discoveries, environmental presentation, and a development panel. Basic player movement, UI Toolkit screens, and persistent settings are now connected; possession, NPC behavior, and candy collection are not implemented. See [UI.md](UI.md) for scene flow and input architecture.
 
 ## Composition Root
 
@@ -17,7 +17,7 @@ Restart reloads the active scene so future world state resets along with the ses
 - `game.Award(ScoreSource.Candy, points)` records an award and its category (`Candy`, `Scare`, `Prank`, `Trick`).
 - `game.Session.Changed` exposes clock, score, and state updates; `Completed` signals dawn.
 - Awards are accepted only while running. Invalid values and integer overflow are rejected.
-- `game.SetPaused(true)` pauses the session clock and rejects rewards. It does not change global `Time.timeScale`; future movement, AI, and interaction systems must obey the session state or add a shared world-pause layer.
+- `game.SetPaused(true)` pauses the session clock and rejects rewards. The session API alone does not change global `Time.timeScale`; `GameplayScreen` supplies the world-pause layer, freezes time and non-music audio, and manages the cursor.
 - Mechanics own reward eligibility, cooldowns, and one-use rules. The score service does not infer whether two awards describe the same scare or trick.
 
 ## Time and Environment
@@ -44,7 +44,7 @@ This is a single dusk-to-dawn session, not an endless day/night loop. Change set
 
 `Halloween > Set Up Foundation Scene` opens `SCN_Main` and adds the configured foundation once. It creates the default data assets, a moon visual, and the development panel. The menu asks Unity to save unsaved scene edits before switching scenes.
 
-`SessionDebugPanel` provides score buttons, pause/resume, time advance, a sample discovery, and restart. Its rewards are testing values, not gameplay balance. Remove or disable this component for the final HUD.
+`SessionDebugPanel` remains available as optional development tooling but is removed from the configured gameplay scene. The scene now uses `GameplayScreen` for HUD, pause, settings, and results.
 
 ## Verification
 

@@ -1,1 +1,11 @@
-{"name":"Halloween2026.Editor","rootNamespace":"Halloween2026.Editor","references":["Halloween2026.Runtime"],"includePlatforms":["Editor"]}
+{
+    "name": "Halloween2026.Editor",
+    "rootNamespace": "Halloween2026.Editor",
+    "references": [
+        "Halloween2026.Runtime",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}

@@ -2,7 +2,8 @@
 
 ## Scenes
 
-- `Assets/InternalAssets/Scenes/SCN_Main.unity` — starter scene with the game bootstrapper, moon/environment controller, and development panel.
+- `Assets/InternalAssets/Scenes/SCN_Menu.unity` — main menu with shared settings and music.
+- `Assets/InternalAssets/Scenes/SCN_Main.unity` — blockout street, controllable ghost, night environment, HUD, pause, and results.
 
 ## Technical Resources
 
@@ -28,3 +29,9 @@ All planned locations are relative to `Assets/InternalAssets/`.
 ## Credits and Licenses
 
 TODO: Record each imported asset's author, source, and license here. No mousestaurant game assets have been copied.
+
+## UI and Audio
+
+- `Assets/InternalAssets/UI/` — UXML layouts, shared USS, and runtime panel/theme assets.
+- `Assets/InternalAssets/Audio/NightLoop.wav` — original generated placeholder music loop; no third-party recording.
+- `Assets/InternalAssets/Data/MAT_Ghost*.mat`, `MAT_Ground.mat`, `MAT_Path.mat`, `MAT_House.mat`, `MAT_Pumpkin.mat` — simple blockout materials.

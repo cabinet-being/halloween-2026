@@ -1,1 +1,14 @@
-{"name":"Halloween2026.Tests","rootNamespace":"Halloween2026.Tests","references":["Halloween2026.Runtime"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"]}
+{
+    "name": "Halloween2026.Tests",
+    "rootNamespace": "Halloween2026.Tests",
+    "references": [
+        "Halloween2026.Runtime",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}
