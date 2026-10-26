@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -19,6 +20,7 @@ namespace Halloween2026.Tests
         private Keyboard _keyboard;
         private Mouse _mouse;
         private Gamepad _gamepad;
+        private Gamepad _otherGamepad;
         private bool _preferencesCaptured;
         private bool _hadPreferences;
         private string _originalPreferences;
@@ -679,6 +681,67 @@ namespace Halloween2026.Tests
             yield return new ExitPlayMode();
         }
 
+        [UnityTest]
+        public IEnumerator SettingsBindingLabelsRefreshWhenActiveGamepadChanges()
+        {
+            EditorSceneManager.OpenScene("Assets/InternalAssets/Scenes/SCN_Menu.unity");
+            yield return new EnterPlayMode();
+            yield return null;
+
+            _hadPreferences = PlayerPrefs.HasKey(SettingsService.PreferenceKey);
+            _originalPreferences = PlayerPrefs.GetString(SettingsService.PreferenceKey, "");
+            _preferencesCaptured = true;
+            _originalInputBehavior = InputSystem.settings.editorInputBehaviorInPlayMode;
+            _originalBackgroundBehavior = InputSystem.settings.backgroundBehavior;
+            _inputConfigured = true;
+            InputSystem.settings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+            InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+            DisableExternalInput();
+            _keyboard = InputSystem.AddDevice<Keyboard>();
+            _gamepad = InputSystem.AddDevice<Gamepad>();
+            EditorWindow.GetWindow(typeof(EditorWindow).Assembly.GetType("UnityEditor.GameView")).Focus();
+            yield return null;
+
+            var menu = Object.FindAnyObjectByType<MenuScreen>();
+            var settings = Object.FindAnyObjectByType<SettingsService>();
+            var root = menu.GetComponent<UIDocument>().rootVisualElement;
+            settings.RestoreDefaults();
+            Assert.AreEqual(ControlDeviceKind.KeyboardMouse, settings.ActiveDevice);
+            menu.OpenSettings();
+            menu.Settings.SelectDeviceTab(ControlDeviceKind.Gamepad);
+            var primary = root.Q<Button>("bind-gamepad-primary");
+            var secondary = root.Q<Button>("bind-gamepad-secondary");
+
+            DescribeGamepad(_gamepad, "DualShock 4", "Sony");
+            SendGamepadButton(GamepadButton.North, true);
+            yield return null;
+            Assert.AreSame(_gamepad, settings.ActiveGamepad);
+            Assert.AreEqual("R2", primary.text);
+            Assert.AreEqual("L2", secondary.text);
+            SendGamepadButton(GamepadButton.North, false);
+            yield return null;
+
+            _otherGamepad = InputSystem.AddDevice<Gamepad>();
+            DescribeGamepad(_otherGamepad, "Xbox Controller", "Microsoft");
+            InputSystem.QueueStateEvent(_otherGamepad, new GamepadState().WithButton(GamepadButton.North));
+            yield return null;
+            Assert.AreSame(_otherGamepad, settings.ActiveGamepad);
+            Assert.AreEqual(ControlDeviceKind.Gamepad, menu.Settings.SelectedDeviceTab);
+            Assert.AreEqual("RT", primary.text);
+            Assert.AreEqual("LT", secondary.text);
+
+            RestorePreferences();
+            yield return new ExitPlayMode();
+        }
+
+        private static void DescribeGamepad(Gamepad pad, string product, string manufacturer)
+        {
+            var descriptionField = typeof(InputDevice).GetField("m_Description",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Assert.IsNotNull(descriptionField, "The test needs an Input System device description to model controller brands.");
+            descriptionField.SetValue(pad, new InputDeviceDescription { product = product, manufacturer = manufacturer });
+        }
+
         private void DisableExternalInput()
         {
             foreach (var device in InputSystem.devices)
@@ -749,6 +812,7 @@ namespace Halloween2026.Tests
             if (_keyboard != null && _keyboard.added) InputSystem.RemoveDevice(_keyboard);
             if (_mouse != null && _mouse.added) InputSystem.RemoveDevice(_mouse);
             if (_gamepad != null && _gamepad.added) InputSystem.RemoveDevice(_gamepad);
+            if (_otherGamepad != null && _otherGamepad.added) InputSystem.RemoveDevice(_otherGamepad);
 
             RestorePreferences();
             foreach (var device in _externalDevices)

@@ -217,6 +217,7 @@ namespace Halloween2026
         private void OnActiveDeviceChanged(ControlDeviceKind kind)
         {
             if (IsOpen && !_manualTab && !IsRebinding) SelectDeviceTabInternal(kind);
+            foreach (var slot in ControlBindings.GamepadSlots) RefreshBinding(slot);
             RefreshPrompts();
         }
 
