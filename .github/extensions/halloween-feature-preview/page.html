@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Feature Preview</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        background: #17121d;
+        color: #f6f0fa;
+      }
+
+      body {
+        box-sizing: border-box;
+        min-height: 100vh;
+        margin: 0;
+        padding: 2rem;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(ellipse at 80% 15%, #482653 0, transparent 38%),
+          radial-gradient(ellipse at 10% 90%, #332044 0, transparent 35%),
+          #17121d;
+      }
+
+      main {
+        width: min(100%, 34rem);
+        padding: clamp(1.5rem, 5vw, 2.5rem);
+        border: 1px solid #60496e;
+        border-radius: 1.25rem;
+        background: rgb(33 26 42 / 92%);
+        box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 30%);
+      }
+
+      .eyebrow {
+        margin: 0 0 0.75rem;
+        color: #f1a45e;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 7vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .intro {
+        max-width: 38ch;
+        color: #c9bdcf;
+        line-height: 1.6;
+      }
+
+      .counter {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        margin: 2rem 0;
+      }
+
+      .counter output {
+        color: #ffbd72;
+        font-size: 4rem;
+        font-variant-numeric: tabular-nums;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .counter span {
+        color: #c9bdcf;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      button {
+        min-height: 2.75rem;
+        padding: 0.65rem 1rem;
+        border: 1px solid #a76f43;
+        border-radius: 0.65rem;
+        background: #f1a45e;
+        color: #211726;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        border-color: #725d7b;
+        background: transparent;
+        color: #f6f0fa;
+      }
+
+      button:hover {
+        filter: brightness(1.1);
+      }
+
+      button:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: 3px;
+      }
+
+      #status {
+        min-height: 1.5em;
+        margin: 1rem 0 0;
+        color: #c9bdcf;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Halloween 2026 · Demo</p>
+      <h1>Feature preview</h1>
+      <p class="intro">A small interactive canvas for checking layout, controls, and live state updates.</p>
+      <div class="counter">
+        <output id="count" aria-label="Demo counter" aria-live="polite">0</output>
+        <span>test clicks</span>
+      </div>
+      <div class="controls">
+        <button id="increment" type="button">Try the feature</button>
+        <button id="reset" class="secondary" type="button">Reset</button>
+      </div>
+      <p id="status" role="status" aria-live="polite">Ready to test.</p>
+    </main>
+    <script>
+      const countOutput = document.querySelector("#count");
+      const status = document.querySelector("#status");
+
+      const update = async (path) => {
+        status.textContent = "Updating…";
+        try {
+          const response = await fetch(path, { method: "POST" });
+          if (!response.ok) {
+            throw new Error(`Request failed (${response.status}).`);
+          }
+          const state = await response.json();
+          countOutput.value = String(state.count);
+          status.textContent = path.endsWith("reset")
+            ? "Counter reset."
+            : `Feature triggered ${state.count} ${state.count === 1 ? "time" : "times"}.`;
+        } catch (error) {
+          status.textContent = error.message;
+        }
+      };
+
+      const loadState = async () => {
+        try {
+          const response = await fetch("/api/state");
+          if (!response.ok) {
+            throw new Error(`Request failed (${response.status}).`);
+          }
+          const state = await response.json();
+          countOutput.value = String(state.count);
+        } catch (error) {
+          status.textContent = error.message;
+        }
+      };
+
+      document.querySelector("#increment").addEventListener("click", () => update("/api/increment"));
+      document.querySelector("#reset").addEventListener("click", () => update("/api/reset"));
+      loadState();
+    </script>
+  </body>
+</html>
