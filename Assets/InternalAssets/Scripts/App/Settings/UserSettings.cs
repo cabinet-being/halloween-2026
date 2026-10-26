@@ -9,6 +9,10 @@ namespace Halloween2026
         public float MasterVolume = 0.8f;
         public float MusicVolume = 0.5f;
         public float Sensitivity = 1f;
+        public float GamepadSensitivity = 1f;
+        public bool InvertGamepadY;
+        public float MoveDeadzone = 0.2f;
+        public float LookDeadzone = 0.2f;
         public float FieldOfView = 65f;
         public string BindingOverrides = "";
 
@@ -17,6 +21,9 @@ namespace Halloween2026
             MasterVolume = Sanitize(MasterVolume, 0f, 1f, 0.8f);
             MusicVolume = Sanitize(MusicVolume, 0f, 1f, 0.5f);
             Sensitivity = Sanitize(Sensitivity, 0.1f, 4f, 1f);
+            GamepadSensitivity = Sanitize(GamepadSensitivity, 0.1f, 4f, 1f);
+            MoveDeadzone = Sanitize(MoveDeadzone, 0.05f, 0.9f, 0.2f);
+            LookDeadzone = Sanitize(LookDeadzone, 0.05f, 0.9f, 0.2f);
             FieldOfView = Sanitize(FieldOfView, 45f, 100f, 65f);
             BindingOverrides = BindingOverrides ?? "";
         }

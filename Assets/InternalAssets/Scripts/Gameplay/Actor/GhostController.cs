@@ -71,15 +71,35 @@ namespace Halloween2026
 
             movement = _moveAction.action.ReadValue<Vector2>();
             look = _lookAction.action.ReadValue<Vector2>();
-            lookScale = _lookAction.action.activeControl?.device is Mouse ? 0.12f : 120f * Time.deltaTime;
+            bool gamepadLook = _settings.ActiveDevice == ControlDeviceKind.Gamepad && _settings.ActiveGamepad != null;
+            if (gamepadLook)
+            {
+                movement = ApplyDeadzone(_settings.ActiveGamepad.leftStick.ReadUnprocessedValue(), _settings.MoveDeadzone);
+                look = ApplyDeadzone(_settings.ActiveGamepad.rightStick.ReadUnprocessedValue(), _settings.LookDeadzone);
+            }
+            else
+            {
+                if (_moveAction.action.activeControl?.device is Gamepad) movement = Vector2.zero;
+                if (_lookAction.action.activeControl?.device is Gamepad) look = Vector2.zero;
+            }
+            lookScale = gamepadLook ? 120f * Time.deltaTime : 0.12f;
+            float sensitivity = gamepadLook ? _settings.GamepadSensitivity : _settings.Sensitivity;
+            if (gamepadLook && _settings.InvertGamepadY) look.y = -look.y;
 
-            transform.Rotate(0f, look.x * lookScale * _settings.Sensitivity, 0f);
-            _pitch = Mathf.Clamp(_pitch - look.y * lookScale * _settings.Sensitivity, -65f, 75f);
+            transform.Rotate(0f, look.x * lookScale * sensitivity, 0f);
+            _pitch = Mathf.Clamp(_pitch - look.y * lookScale * sensitivity, -65f, 75f);
             _pitchPivot.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
 
             direction = transform.TransformDirection(new Vector3(movement.x, 0f, movement.y));
             direction = Vector3.ClampMagnitude(direction, 1f);
             _controller.Move((direction * _speed + Vector3.down * 2f) * Time.deltaTime);
+        }
+
+        private static Vector2 ApplyDeadzone(Vector2 value, float deadzone)
+        {
+            float magnitude = value.magnitude;
+            if (magnitude <= deadzone) return Vector2.zero;
+            return value / magnitude * Mathf.Min(1f, (magnitude - deadzone) / (1f - deadzone));
         }
 
         private void ApplySettings()

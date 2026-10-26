@@ -8,13 +8,14 @@
             </ui:VisualElement>
             <ui:VisualElement class="crosshair" />
             <ui:Label name="action-notice" class="action-notice" />
-            <ui:VisualElement class="hud-bottom"><ui:Label name="controls-hint" text="WASD · Move    Mouse · Look" class="small" /><ui:Label text="ESC · Pause" class="small" /></ui:VisualElement>
+            <ui:VisualElement class="hud-bottom"><ui:Label name="controls-hint" text="WASD · Move    Mouse · Look" class="small" /><ui:Label name="pause-hint" text="ESC · Pause" class="small" /></ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="pause-screen" class="screen overlay hidden">
             <ui:VisualElement class="card">
                 <ui:Label text="TAKE A BREATHER" class="eyebrow" />
                 <ui:Label text="Night on hold" class="heading" />
                 <ui:Label text="The moon can wait. Your mischief will be here." class="subtitle" />
+                <ui:Label name="disconnect-notice" class="status hidden" text="Controller disconnected. Reconnect it or use keyboard and mouse to resume." />
                 <ui:Button name="resume-button" text="Resume" class="primary" />
                 <ui:Button name="settings-button" text="Settings" />
                 <ui:Button name="menu-button" text="Main Menu" class="quiet" />

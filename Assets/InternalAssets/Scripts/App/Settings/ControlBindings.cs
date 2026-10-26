@@ -19,7 +19,7 @@ namespace Halloween2026
             }
         }
 
-        public static readonly Slot[] Slots =
+        public static readonly Slot[] KeyboardMouseSlots =
         {
             new Slot("forward", "Player/Move", "<Keyboard>/w"),
             new Slot("backward", "Player/Move", "<Keyboard>/s"),
@@ -27,6 +27,12 @@ namespace Halloween2026
             new Slot("right", "Player/Move", "<Keyboard>/d"),
             new Slot("primary", "Player/Attack", "<Mouse>/leftButton"),
             new Slot("secondary", "Player/Interact", "<Mouse>/rightButton")
+        };
+        public static readonly Slot[] Slots = KeyboardMouseSlots;
+        public static readonly Slot[] GamepadSlots =
+        {
+            new Slot("primary", "Player/Attack", "<Gamepad>/rightTrigger"),
+            new Slot("secondary", "Player/Interact", "<Gamepad>/leftTrigger")
         };
 
         public static int Index(InputAction action, Slot slot)
@@ -47,7 +53,8 @@ namespace Halloween2026
 
             if (string.Equals(path, "<Keyboard>/escape", StringComparison.OrdinalIgnoreCase)) return true;
 
-            foreach (var slot in Slots)
+            foreach (var slot in changed.DefaultPath.StartsWith("<Gamepad>/", StringComparison.Ordinal)
+                         ? GamepadSlots : KeyboardMouseSlots)
             {
                 if (slot == changed) continue;
 
@@ -57,6 +64,50 @@ namespace Halloween2026
             }
 
             return false;
+        }
+
+        public static bool IsReservedGamepadControl(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return true;
+            string value = path.ToLowerInvariant();
+            return value.Contains("/start") || value.Contains("/select")
+                || value.Contains("/buttonsouth") || value.Contains("/buttoneast")
+                || value.Contains("/dpad") || value.Contains("/leftstick")
+                || value.Contains("/rightstick");
+        }
+
+        public static bool IsPlayStation(Gamepad pad)
+        {
+            if (pad == null) return false;
+            string product = pad.description.product ?? "";
+            string manufacturer = pad.description.manufacturer ?? "";
+            return product.IndexOf("Dual", StringComparison.OrdinalIgnoreCase) >= 0
+                || manufacturer.IndexOf("Sony", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static bool IsXbox(Gamepad pad)
+        {
+            if (pad == null) return false;
+            string product = pad.description.product ?? "";
+            string manufacturer = pad.description.manufacturer ?? "";
+            return product.IndexOf("Xbox", StringComparison.OrdinalIgnoreCase) >= 0
+                || manufacturer.IndexOf("Microsoft", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static string DisplayString(InputAction action, Slot slot, Gamepad pad)
+        {
+            var binding = action.bindings[Index(action, slot)];
+            if (!slot.DefaultPath.StartsWith("<Gamepad>/", StringComparison.Ordinal)) return binding.ToDisplayString();
+            string path = (binding.effectivePath ?? "").ToLowerInvariant();
+            bool ps = IsPlayStation(pad);
+            if (!ps && !IsXbox(pad)) return binding.ToDisplayString();
+            if (path.EndsWith("/righttrigger")) return ps ? "R2" : "RT";
+            if (path.EndsWith("/lefttrigger")) return ps ? "L2" : "LT";
+            if (path.EndsWith("/rightshoulder")) return ps ? "R1" : "RB";
+            if (path.EndsWith("/leftshoulder")) return ps ? "L1" : "LB";
+            if (path.EndsWith("/buttonnorth")) return ps ? "△" : "Y";
+            if (path.EndsWith("/buttonwest")) return ps ? "□" : "X";
+            return binding.ToDisplayString();
         }
     }
 }

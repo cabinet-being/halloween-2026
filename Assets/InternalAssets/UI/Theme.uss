@@ -18,6 +18,10 @@ Button {
 }
 Button:hover { background-color: rgb(48, 61, 66); border-color: rgb(170, 205, 176); }
 Button:focus { border-width: 2px; border-color: rgb(197, 231, 186); }
+Slider:focus, Toggle:focus { border-width: 2px; border-color: rgb(197, 231, 186); border-radius: 4px; }
+.device-tabs { flex-direction: row; margin-bottom: 8px; }
+.device-tabs Button { flex-grow: 1; margin-right: 8px; height: 42px; -unity-text-align: middle-center; }
+.device-tabs Button.selected-tab { background-color: rgb(76, 101, 90); border-color: rgb(197, 231, 186); }
 Button:active { background-color: rgb(70, 81, 65); }
 Button:disabled { opacity: 0.45; }
 Button.primary { background-color: rgb(225, 165, 82); color: rgb(23, 28, 32); border-color: rgb(246, 194, 115); }
@@ -42,19 +46,22 @@ Button.quiet { background-color: rgba(0, 0, 0, 0); border-color: rgb(55, 64, 72)
 .card { width: 440px; padding: 36px; background-color: rgb(23, 31, 40); border-width: 1px; border-color: rgb(65, 77, 83); border-radius: 8px; }
 .heading { font-size: 36px; -unity-font-style: bold; margin-bottom: 12px; }
 .card .subtitle { font-size: 16px; margin-top: 0; margin-bottom: 24px; }
-.settings-card { width: 760px; max-height: 94%; padding: 28px 36px; }
-.settings-header { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.settings-card { width: 760px; max-width: 94%; height: 94%; max-height: 94%; padding: 28px 36px; flex-direction: column; }
+.settings-header { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-shrink: 0; }
+.settings-card .heading { flex-shrink: 0; }
+.settings-scroll { flex-grow: 1; flex-shrink: 1; min-height: 0; }
 .section-title { color: rgb(233, 171, 89); -unity-font-style: bold; font-size: 13px; letter-spacing: 2px; margin-top: 18px; margin-bottom: 10px; }
 .setting-row { flex-direction: row; align-items: center; height: 44px; }
 .setting-name { width: 170px; font-size: 16px; }
 .setting-slider { flex-grow: 1; margin-right: 20px; }
 .setting-value { width: 68px; -unity-text-align: middle-right; font-size: 16px; color: rgb(197, 231, 186); }
 .controls-grid { flex-direction: row; flex-wrap: wrap; }
-.binding-row { width: 50%; flex-direction: row; align-items: center; padding-right: 16px; height: 42px; }
-.binding-label { flex-grow: 1; font-size: 14px; }
-.binding-button { width: 130px; height: 34px; font-size: 13px; margin-bottom: 0; -unity-text-align: middle-center; padding: 0 6px; }
-.settings-actions { flex-direction: row; margin-top: 20px; }
-.settings-actions Button { flex-grow: 1; margin-right: 10px; -unity-text-align: middle-center; }
+.binding-row { width: 50%; min-width: 210px; flex-direction: row; align-items: center; padding-right: 6px; height: 42px; }
+.binding-label { flex-grow: 1; flex-shrink: 1; min-width: 0px; font-size: 14px; white-space: normal; }
+.binding-button { width: 104px; flex-shrink: 0; height: 34px; font-size: 13px; margin-bottom: 0; -unity-text-align: middle-center; padding: 0 6px; }
+.settings-actions { flex-direction: row; margin-top: 20px; flex-shrink: 0; }
+.settings-actions Button { flex-grow: 1; flex-shrink: 1; flex-basis: 0px; min-width: 0px; margin-right: 6px; padding: 0 4px; font-size: 13px; white-space: normal; -unity-text-align: middle-center; }
+.settings-actions #settings-back-button { margin-right: 0; }
 .status { min-height: 38px; font-size: 14px; color: rgb(197, 231, 186); white-space: normal; margin-top: 10px; }
 .hud { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 .hud-top { flex-direction: row; justify-content: space-between; padding: 28px 34px; }
@@ -75,7 +82,7 @@ Button.quiet { background-color: rgba(0, 0, 0, 0); border-color: rgb(55, 64, 72)
 .settings-card .binding-row { height: 36px; }
 .settings-card .status { min-height: 26px; margin-top: 6px; font-size: 12px; }
 .settings-card .settings-actions { margin-top: 12px; }
-.settings-card .settings-actions Button { height: 44px; margin-bottom: 0; }
+.settings-card .settings-actions Button { height: 48px; margin-bottom: 0; }
 .unity-base-slider__tracker { background-color: rgb(65, 80, 85); border-color: rgb(65, 80, 85); }
 .unity-base-slider__dragger { background-color: rgb(197, 231, 186); border-color: rgb(197, 231, 186); border-radius: 3px; }
 .unity-scroller--vertical { width: 10px; }

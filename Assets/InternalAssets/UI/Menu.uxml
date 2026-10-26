@@ -20,6 +20,6 @@
             <ui:VisualElement class="house house-b"><ui:VisualElement class="window" /></ui:VisualElement>
             <ui:VisualElement class="house house-c"><ui:VisualElement class="window" /></ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="menu-footer"><ui:Label text="HALLOWEEN 2026" class="small" /><ui:Label text="A small ghost. A fresh start." class="small" /></ui:VisualElement>
+        <ui:VisualElement class="menu-footer"><ui:Label text="HALLOWEEN 2026" class="small" /><ui:Label name="menu-hint" text="A small ghost. A fresh start." class="small" /></ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -2,16 +2,18 @@
     <Style src="Theme.uss" />
     <ui:VisualElement name="settings-screen" class="screen overlay hidden">
         <ui:VisualElement class="card settings-card">
-            <ui:VisualElement class="settings-header"><ui:Label text="MAKE YOURSELF AT HOME" class="eyebrow" /><ui:Label text="ESC · Back" class="small" /></ui:VisualElement>
+            <ui:VisualElement class="settings-header"><ui:Label text="MAKE YOURSELF AT HOME" class="eyebrow" /><ui:Label name="settings-back-hint" text="ESC · Back" class="small" /></ui:VisualElement>
             <ui:Label text="Settings" class="heading" />
-            <ui:ScrollView name="settings-scroll">
+            <ui:ScrollView name="settings-scroll" class="settings-scroll">
                 <ui:Label text="SOUND" class="section-title" />
                 <ui:VisualElement class="setting-row"><ui:Label text="Master volume" class="setting-name" /><ui:Slider name="master-slider" low-value="0" high-value="100" class="setting-slider" /><ui:Label name="master-value" class="setting-value" /></ui:VisualElement>
                 <ui:VisualElement class="setting-row"><ui:Label text="Music volume" class="setting-name" /><ui:Slider name="music-slider" low-value="0" high-value="100" class="setting-slider" /><ui:Label name="music-value" class="setting-value" /></ui:VisualElement>
                 <ui:Label text="CAMERA" class="section-title" />
-                <ui:VisualElement class="setting-row"><ui:Label text="Mouse sensitivity" class="setting-name" /><ui:Slider name="sensitivity-slider" low-value="0.1" high-value="4" class="setting-slider" /><ui:Label name="sensitivity-value" class="setting-value" /></ui:VisualElement>
                 <ui:VisualElement class="setting-row"><ui:Label text="Field of view" class="setting-name" /><ui:Slider name="fov-slider" low-value="45" high-value="100" class="setting-slider" /><ui:Label name="fov-value" class="setting-value" /></ui:VisualElement>
                 <ui:Label text="CONTROLS" class="section-title" />
+                <ui:VisualElement class="device-tabs"><ui:Button name="keyboard-tab" text="Keyboard &amp; mouse" /><ui:Button name="gamepad-tab" text="Gamepad" /></ui:VisualElement>
+                <ui:VisualElement name="keyboard-panel">
+                <ui:VisualElement class="setting-row"><ui:Label text="Mouse sensitivity" class="setting-name" /><ui:Slider name="sensitivity-slider" low-value="0.1" high-value="4" class="setting-slider" /><ui:Label name="sensitivity-value" class="setting-value" /></ui:VisualElement>
                 <ui:VisualElement class="controls-grid">
                     <ui:VisualElement class="binding-row"><ui:Label text="Move forward" class="binding-label" /><ui:Button name="bind-forward" class="binding-button" /></ui:VisualElement>
                     <ui:VisualElement class="binding-row"><ui:Label text="Move backward" class="binding-label" /><ui:Button name="bind-backward" class="binding-button" /></ui:VisualElement>
@@ -21,9 +23,21 @@
                     <ui:VisualElement class="binding-row"><ui:Label text="Secondary action" class="binding-label" /><ui:Button name="bind-secondary" class="binding-button" /></ui:VisualElement>
                 </ui:VisualElement>
                 <ui:Label text="Mouse movement controls the camera. Escape is always available for pause and back." class="small" />
+                </ui:VisualElement>
+                <ui:VisualElement name="gamepad-panel" class="hidden">
+                    <ui:VisualElement class="setting-row"><ui:Label text="Look sensitivity" class="setting-name" /><ui:Slider name="gamepad-sensitivity-slider" low-value="0.1" high-value="4" class="setting-slider" /><ui:Label name="gamepad-sensitivity-value" class="setting-value" /></ui:VisualElement>
+                    <ui:VisualElement class="setting-row"><ui:Label text="Invert look Y" class="setting-name" /><ui:Toggle name="gamepad-invert-y" /></ui:VisualElement>
+                    <ui:VisualElement class="setting-row"><ui:Label text="Move deadzone" class="setting-name" /><ui:Slider name="move-deadzone-slider" low-value="0.05" high-value="0.9" class="setting-slider" /><ui:Label name="move-deadzone-value" class="setting-value" /></ui:VisualElement>
+                    <ui:VisualElement class="setting-row"><ui:Label text="Look deadzone" class="setting-name" /><ui:Slider name="look-deadzone-slider" low-value="0.05" high-value="0.9" class="setting-slider" /><ui:Label name="look-deadzone-value" class="setting-value" /></ui:VisualElement>
+                    <ui:VisualElement class="controls-grid">
+                        <ui:VisualElement class="binding-row"><ui:Label text="Primary action" class="binding-label" /><ui:Button name="bind-gamepad-primary" class="binding-button" /></ui:VisualElement>
+                        <ui:VisualElement class="binding-row"><ui:Label text="Secondary action" class="binding-label" /><ui:Button name="bind-gamepad-secondary" class="binding-button" /></ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Label name="gamepad-help" text="South confirms, East goes back. Start pauses. Sticks, D-pad, South, East, Start and Select are reserved for menus." class="small" />
+                </ui:VisualElement>
                 <ui:Label name="settings-status" text="Changes apply immediately and are saved automatically." class="status" />
             </ui:ScrollView>
-            <ui:VisualElement class="settings-actions"><ui:Button name="defaults-button" text="Restore defaults" class="quiet" /><ui:Button name="settings-back-button" text="Back" class="primary" /></ui:VisualElement>
+            <ui:VisualElement class="settings-actions"><ui:Button name="defaults-button" text="Reset this device" class="quiet" /><ui:Button name="common-defaults-button" text="Reset sound &amp; FOV" class="quiet" /><ui:Button name="settings-back-button" text="Back" class="primary" /></ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

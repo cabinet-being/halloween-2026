@@ -30,6 +30,8 @@ namespace Halloween2026
             _root.Q<Button>("settings-button").clicked += OpenSettings;
             _root.Q<Button>("quit-button").clicked += SceneFlow.Quit;
             _root.Q<Button>("play-button").Focus();
+            _settings.ActiveDeviceChanged += OnActiveDeviceChanged;
+            OnActiveDeviceChanged(_settings.ActiveDevice);
 
             _pauseAction.action.Enable();
             _pauseAction.action.performed += OnBack;
@@ -37,6 +39,25 @@ namespace Halloween2026
             AudioListener.pause = false;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+        }
+
+        private void Update()
+        {
+            _settingsView?.Update();
+            if (_settingsView != null && _settingsView.IsOpen && !_settingsView.IsRebinding
+                && Time.frameCount > _settingsView.IgnoreBackUntilFrame
+                && Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+                _settingsView.Back();
+        }
+
+        private void OnActiveDeviceChanged(ControlDeviceKind kind)
+        {
+            bool gamepad = kind == ControlDeviceKind.Gamepad;
+            bool playStation = ControlBindings.IsPlayStation(_settings.ActiveGamepad);
+            bool xbox = ControlBindings.IsXbox(_settings.ActiveGamepad);
+            _root.Q<Label>("menu-hint").text = gamepad
+                ? (playStation ? "✕ Confirm · ○ Back" : xbox ? "A Confirm · B Back" : "South Confirm · East Back")
+                : "A small ghost. A fresh start.";
         }
 
         public void OpenSettings()
@@ -62,6 +83,7 @@ namespace Halloween2026
         private void OnDestroy()
         {
             _settingsView?.Dispose();
+            _settings.ActiveDeviceChanged -= OnActiveDeviceChanged;
             _pauseAction.action.performed -= OnBack;
             _pauseAction.action.Disable();
         }

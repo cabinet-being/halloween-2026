@@ -44,13 +44,24 @@ namespace Halloween2026
             _game.Session.Completed += ShowResults;
             _ghost.ActionRequested += ShowAction;
             _settings.Changed += RefreshControls;
+            _settings.ActiveDeviceChanged += OnActiveDeviceChanged;
+            _settings.ActiveGamepadDisconnected += OnGamepadDisconnected;
 
             SetWorldPaused(false);
             RefreshControls();
+            OnActiveDeviceChanged(_settings.ActiveDevice);
         }
 
         private void Update()
         {
+            _settingsView?.Update();
+            if (_settingsView != null && !_settingsView.IsRebinding
+                && Time.frameCount > _settingsView.IgnoreBackUntilFrame
+                && Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+            {
+                if (_settingsView.IsOpen) _settingsView.Back();
+                else if (_game.Session.State == SessionState.Paused) Resume();
+            }
             int seconds = Mathf.CeilToInt(_game.Session.Remaining);
 
             _root.Q<Label>("score-label").text = _game.Session.Score.ToString("N0");
@@ -74,6 +85,7 @@ namespace Halloween2026
 
             _settingsView.Hide();
             _root.Q("pause-screen").AddToClassList("hidden");
+            _root.Q("disconnect-notice").AddToClassList("hidden");
             _root.Q("hud").RemoveFromClassList("hidden");
             _game.SetPaused(false);
             SetWorldPaused(false);
@@ -90,6 +102,20 @@ namespace Halloween2026
             _root.Q("hud").AddToClassList("hidden");
             _root.Q("pause-screen").RemoveFromClassList("hidden");
             _root.Q<Button>("resume-button").Focus();
+        }
+
+        private void OnGamepadDisconnected()
+        {
+            if (_game.Session.State != SessionState.Running) return;
+            Pause();
+            _root.Q("disconnect-notice").RemoveFromClassList("hidden");
+        }
+
+        private void OnActiveDeviceChanged(ControlDeviceKind kind)
+        {
+            RefreshControls();
+            if (kind == ControlDeviceKind.KeyboardMouse)
+                _root.Q("disconnect-notice").AddToClassList("hidden");
         }
 
         private void OnPause(InputAction.CallbackContext context)
@@ -127,6 +153,13 @@ namespace Halloween2026
 
         private void RefreshControls()
         {
+            if (_settings.ActiveDevice == ControlDeviceKind.Gamepad)
+            {
+                bool playStation = ControlBindings.IsPlayStation(_settings.ActiveGamepad);
+                _root.Q<Label>("controls-hint").text = "Left stick · Move    Right stick · Look";
+                _root.Q<Label>("pause-hint").text = playStation ? "Options · Pause" : "Start · Pause";
+                return;
+            }
             InputAction move = _settings.Input.FindAction("Player/Move", true);
             string forward = move.bindings[ControlBindings.Index(move, ControlBindings.Slots[0])].ToDisplayString();
             string backward = move.bindings[ControlBindings.Index(move, ControlBindings.Slots[1])].ToDisplayString();
@@ -134,6 +167,7 @@ namespace Halloween2026
             string right = move.bindings[ControlBindings.Index(move, ControlBindings.Slots[3])].ToDisplayString();
 
             _root.Q<Label>("controls-hint").text = $"{forward} {left} {backward} {right} · Move    Mouse · Look";
+            _root.Q<Label>("pause-hint").text = "ESC · Pause";
         }
 
         private void ExitToMenu()
@@ -160,6 +194,8 @@ namespace Halloween2026
             _game.Session.Completed -= ShowResults;
             _ghost.ActionRequested -= ShowAction;
             _settings.Changed -= RefreshControls;
+            _settings.ActiveDeviceChanged -= OnActiveDeviceChanged;
+            _settings.ActiveGamepadDisconnected -= OnGamepadDisconnected;
             Time.timeScale = 1f;
             AudioListener.pause = false;
             Cursor.lockState = CursorLockMode.None;
