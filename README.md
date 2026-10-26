@@ -15,12 +15,12 @@ The repository contains a technical foundation for the night, scoring, persisten
 ## Features
 
 - Universal Render Pipeline configuration.
-- Starter Input System actions.
+- Input System actions for keyboard, mouse, and gamepad.
 - Dedicated folders for project assets and documentation.
 - Timed night with pause, completion, and a configurable moon/sky cycle.
 - Score categories, saved records, and persistent secret discoveries.
 - UI Toolkit main menu, gameplay HUD, pause menu, shared settings, and results screen.
-- Persistent audio/camera settings and rebindable controls.
+- Persistent audio/camera settings, separate keyboard/mouse and gamepad control options, and rebindable controls.
 - Basic third-person ghost movement on a blockout street; possession and NPC gameplay are not implemented yet.
 
 ## Screenshots
@@ -35,7 +35,7 @@ TODO: Add screenshots once the first playable prototype is ready.
 
 ## Usage
 
-Open `Assets/InternalAssets/Scenes/SCN_Menu.unity` and press Play. Choose **Start the night** to enter gameplay; use **WASD** to move, the **mouse** to look, and **Escape** for pause. Settings are available from the main menu and pause menu, apply immediately, and persist between launches.
+Open `Assets/InternalAssets/Scenes/SCN_Menu.unity` and press Play. Choose **Start the night** to enter gameplay. Use **WASD** and the **mouse**, or the gamepad's **left stick** to move and **right stick** to look. Primary and secondary actions use the mouse buttons or **RT / R2** and **LT / L2**. Press **Escape** or **Start / Options** to pause. Settings are available from the main menu and pause menu, apply immediately, and persist between launches. Their keyboard/mouse and gamepad tabs have separate control options and resets.
 
 See [screens, settings, and controls](Docs/UI.md) for the UI layouts, action bindings, and setup tools. The gameplay scene also works when opened directly. Tune the night in `Assets/InternalAssets/Data/NightSettings.asset`.
 

@@ -40,6 +40,14 @@ This is a single dusk-to-dawn session, not an endless day/night loop. Change set
 - If neither copy can load, or the primary belongs to an unsupported version, the game preserves existing files and disables saving for that session. Errors are logged and exposed through `SaveError`.
 - Failed writes remain pending and retry at subsequent save points, application pause, destruction, or quit. Restart is blocked while a pending write fails, so it does not silently discard that progress. Persistence is local, with no cloud sync or migrations yet.
 
+## Input and Settings
+
+`SettingsService` stores audio, camera, and control preferences under the existing `Halloween2026.Settings.v1` PlayerPrefs key. Loading JSON into a settings object with defaults preserves older saved mouse settings and binding overrides while supplying defaults for newly added gamepad sensitivity, vertical look inversion, and separate move/look deadzones. Input System binding overrides remain attached to the authored action asset.
+
+Keyboard/mouse and gamepad have separate editable binding slots. `SettingsView` follows the active device when opened, and automatic tab changes stop after the player explicitly selects a tab. Device-specific reset restores that device's look options and editable bindings; a separate reset restores shared sound and field of view. Rebinding rejects conflicts within the selected device and reserves menu controls.
+
+`SettingsService` identifies active input from key presses, mouse input, gamepad buttons, or stick motion beyond an intent threshold. `GhostController` reads the active gamepad's sticks for movement and look, applying their separate deadzones; keyboard/mouse and gamepad look speeds remain independent. The active gamepad disconnect event makes `GameplayScreen` pause a running session and display a reconnect notice. See [UI.md](UI.md) for the player-facing controls and settings.
+
 ## Scene and Development Tools
 
 `Halloween > Set Up Foundation Scene` opens `SCN_Main` and adds the configured foundation once. It creates the default data assets, a moon visual, and the development panel. The menu asks Unity to save unsaved scene edits before switching scenes.
