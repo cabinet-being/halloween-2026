@@ -46,6 +46,8 @@ namespace Halloween2026
 
         private void OnEnable()
         {
+            _settings.ActiveDeviceChanged += ApplyControlDevice;
+            ApplyControlDevice(_settings.ActiveDevice);
             _moveAction.action.Enable();
             _lookAction.action.Enable();
             _primaryAction.action.Enable();
@@ -69,18 +71,19 @@ namespace Halloween2026
 
             if (_game.Session.State != SessionState.Running) return;
 
-            movement = _moveAction.action.ReadValue<Vector2>();
-            look = _lookAction.action.ReadValue<Vector2>();
-            bool gamepadLook = _settings.ActiveDevice == ControlDeviceKind.Gamepad && _settings.ActiveGamepad != null;
+            bool gamepadLook = _settings.ActiveDevice == ControlDeviceKind.Gamepad;
             if (gamepadLook)
             {
-                movement = ApplyDeadzone(_settings.ActiveGamepad.leftStick.ReadUnprocessedValue(), _settings.MoveDeadzone);
-                look = ApplyDeadzone(_settings.ActiveGamepad.rightStick.ReadUnprocessedValue(), _settings.LookDeadzone);
+                var gamepad = _settings.ActiveGamepad;
+                movement = gamepad != null
+                    ? ApplyDeadzone(gamepad.leftStick.ReadUnprocessedValue(), _settings.MoveDeadzone) : Vector2.zero;
+                look = gamepad != null
+                    ? ApplyDeadzone(gamepad.rightStick.ReadUnprocessedValue(), _settings.LookDeadzone) : Vector2.zero;
             }
             else
             {
-                if (_moveAction.action.activeControl?.device is Gamepad) movement = Vector2.zero;
-                if (_lookAction.action.activeControl?.device is Gamepad) look = Vector2.zero;
+                movement = _moveAction.action.ReadValue<Vector2>();
+                look = _lookAction.action.ReadValue<Vector2>();
             }
             lookScale = gamepadLook ? 120f * Time.deltaTime : 0.12f;
             float sensitivity = gamepadLook ? _settings.GamepadSensitivity : _settings.Sensitivity;
@@ -107,6 +110,13 @@ namespace Halloween2026
             _camera.fieldOfView = _settings.FieldOfView;
         }
 
+        private void ApplyControlDevice(ControlDeviceKind device)
+        {
+            var mask = InputBinding.MaskByGroup(device == ControlDeviceKind.Gamepad ? "Gamepad" : "Keyboard&Mouse");
+            _moveAction.action.bindingMask = mask;
+            _lookAction.action.bindingMask = mask;
+        }
+
         private void OnPrimary(InputAction.CallbackContext context)
         {
             if (_game.Session.State != SessionState.Running) return;
@@ -123,12 +133,15 @@ namespace Halloween2026
 
         private void OnDisable()
         {
+            if (_settings != null) _settings.ActiveDeviceChanged -= ApplyControlDevice;
             _primaryAction.action.performed -= OnPrimary;
             _secondaryAction.action.performed -= OnSecondary;
             _moveAction.action.Disable();
             _lookAction.action.Disable();
             _primaryAction.action.Disable();
             _secondaryAction.action.Disable();
+            _moveAction.action.bindingMask = null;
+            _lookAction.action.bindingMask = null;
         }
 
         private void OnDestroy()

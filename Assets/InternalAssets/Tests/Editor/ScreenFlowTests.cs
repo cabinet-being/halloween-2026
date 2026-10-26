@@ -624,6 +624,61 @@ namespace Halloween2026.Tests
             yield return new ExitPlayMode();
         }
 
+        [UnityTest]
+        public IEnumerator HeldGamepadStickDoesNotBlockReboundKeyboardMovement()
+        {
+            EditorSceneManager.OpenScene("Assets/InternalAssets/Scenes/SCN_Main.unity");
+            yield return new EnterPlayMode();
+            yield return null;
+
+            _hadPreferences = PlayerPrefs.HasKey(SettingsService.PreferenceKey);
+            _originalPreferences = PlayerPrefs.GetString(SettingsService.PreferenceKey, "");
+            _preferencesCaptured = true;
+            _originalInputBehavior = InputSystem.settings.editorInputBehaviorInPlayMode;
+            _originalBackgroundBehavior = InputSystem.settings.backgroundBehavior;
+            _inputConfigured = true;
+            InputSystem.settings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+            InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+            DisableExternalInput();
+            _keyboard = InputSystem.AddDevice<Keyboard>();
+            _gamepad = InputSystem.AddDevice<Gamepad>();
+            EditorWindow.GetWindow(typeof(EditorWindow).Assembly.GetType("UnityEditor.GameView")).Focus();
+            yield return null;
+
+            var settings = Object.FindAnyObjectByType<SettingsService>();
+            var ghost = Object.FindAnyObjectByType<GhostController>();
+            Assert.IsNotNull(settings);
+            Assert.IsNotNull(ghost);
+            settings.RestoreDefaults();
+            var forwardSlot = ControlBindings.KeyboardMouseSlots[0];
+            var move = settings.Input.FindAction(forwardSlot.Action, true);
+            move.ApplyBindingOverride(ControlBindings.Index(move, forwardSlot), "<Keyboard>/i");
+            settings.SaveBindings();
+
+            InputSystem.QueueDeltaStateEvent(_gamepad.leftStick, Vector2.right);
+            yield return null;
+            yield return null;
+            Assert.AreEqual(ControlDeviceKind.Gamepad, settings.ActiveDevice);
+            var before = ghost.transform.position;
+            var forward = ghost.transform.forward;
+            var right = ghost.transform.right;
+
+            SendKeys(Key.I);
+            yield return null;
+            Assert.AreEqual(ControlDeviceKind.KeyboardMouse, settings.ActiveDevice);
+            yield return null;
+            yield return null;
+            var traveled = ghost.transform.position - before;
+            Assert.Greater(Vector3.Dot(traveled, forward), 0.001f,
+                "The rebound forward key must move the ghost while the gamepad stick remains fully held.");
+            Assert.Less(Mathf.Abs(Vector3.Dot(traveled, right)), 0.001f,
+                "The held gamepad stick must not steer after keyboard intent takes over.");
+
+            SendKeys();
+            RestorePreferences();
+            yield return new ExitPlayMode();
+        }
+
         private void DisableExternalInput()
         {
             foreach (var device in InputSystem.devices)
