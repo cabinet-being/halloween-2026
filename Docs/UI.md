@@ -53,7 +53,7 @@ Settings has Keyboard & mouse and Gamepad tabs. Opening Settings selects the act
 
 ## Input Actions
 
-The existing `InputSystem_Actions.inputactions` remains the source of truth for gameplay controls. No generated C# input wrapper is used. Inspector-assigned `InputActionReference` fields follow the approach in mousestaurant; `SettingsService` also reads device activity to identify the active input device.
+The existing `InputSystem_Actions.inputactions` remains the source of truth for gameplay controls. No generated C# input wrapper is used. Gameplay components use Inspector-assigned `InputActionReference` fields; `SettingsService` also reads device activity to identify the active input device.
 
 | Action | Default | Consumer |
 | --- | --- | --- |

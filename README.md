@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/unity-6000.4.7f1-blue" alt="Unity 6000.4.7f1">
 </p>
 
-A Unity project for Halloween 2026. Currently at the gameplay foundation stage, with a project structure based on mousestaurant.
+A Unity project for Halloween 2026, currently at the gameplay foundation stage.
 
 ## Overview
 
@@ -149,4 +149,4 @@ TODO: Choose a license. No license file has been added yet.
 
 ## Credits
 
-Project structure and documentation layout adapted from mousestaurant. Add asset authors and license details to [Docs/Assets.md](Docs/Assets.md) as assets are introduced.
+Add asset authors and license details to [Docs/Assets.md](Docs/Assets.md) as assets are introduced.

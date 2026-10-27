@@ -31,4 +31,4 @@
 - Keep editor-only scripts in an `Editor` folder.
 - Follow [NamingConvention.md](NamingConvention.md).
 
-These conventions are adapted from mousestaurant. Runtime code uses the `Halloween2026` namespace; editor tooling and tests are isolated in their own assemblies.
+Runtime code uses the `Halloween2026` namespace; editor tooling and tests are isolated in their own assemblies.

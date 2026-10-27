@@ -2,8 +2,6 @@
 
 ## Resource Prefixes
 
-Following mousestaurant:
-
 - `ACT_` — actor prefabs.
 - `TPL_` — template prefabs.
 - `ENV_` — environment elements.

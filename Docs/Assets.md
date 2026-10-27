@@ -28,7 +28,7 @@ All planned locations are relative to `Assets/InternalAssets/`.
 
 ## Credits and Licenses
 
-TODO: Record each imported asset's author, source, and license here. No mousestaurant game assets have been copied.
+TODO: Record each imported asset's author, source, and license here.
 
 ## UI and Audio
 
